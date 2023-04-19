@@ -1,0 +1,2 @@
+#!/bin/bash
+echo $((BREATH**$LOVE))10-love_exponent_breath
