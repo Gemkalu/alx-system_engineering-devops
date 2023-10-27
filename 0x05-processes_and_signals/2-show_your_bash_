@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# # script that displays lines containing bash PIDs without using ps
+pgrep -l bash
