@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Infinity and beyond script that displays"I hate the kill command"
+# SIGTERM signal and "Y U no love me" on SIGINT
+
+terminator() {
+	rm /var/run/myscript.pid
+	exit
+}
+
+echo "$$" > /var/run/holbertonscript.pid
+while true; do
+	echo "To infinity and beyond"
+	sleep 2
+	trap "'echo "Y U no love me?!"' SIGINT"
+	trap 'echo "I hate the kill command" && terminator' SIGTERM
+	trap 'terminator' SIGQUIT
+done
