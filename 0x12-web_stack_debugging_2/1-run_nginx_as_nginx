@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-# Run Nginx as Nginx
-apache_pid="$(pgrep apache2 | head -n 1)"
-echo "$apache_pid" > /run/apache2/apache2.pid
-service apache2 stop
-sed -i "s/80 default_serv/8080 default_serv/" /etc/nginx/sites-available/default
-sed -i '/user www-data;$/a user nginx;' /etc/nginx/nginx.conf
-chown nginx:nginx /etc/nginx/nginx.conf
+# Fixes server bug
 chmod 644 /etc/nginx/nginx.conf
-sudo -u nginx service nginx restart
+sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
+sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
+pkill apache2
+# restart
+su nginx -s /bin/bash -c 'service nginx restart'
